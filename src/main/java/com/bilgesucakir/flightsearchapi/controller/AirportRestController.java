@@ -2,6 +2,8 @@ package com.bilgesucakir.flightsearchapi.controller;
 
 import com.bilgesucakir.flightsearchapi.dto.AirportDTO;
 import com.bilgesucakir.flightsearchapi.entity.Airport;
+import com.bilgesucakir.flightsearchapi.exception.AirportNotFoundException;
+import com.bilgesucakir.flightsearchapi.exception.InvalidCityNameException;
 import com.bilgesucakir.flightsearchapi.service.AirportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +42,7 @@ public class AirportRestController {
         Airport airport = airportService.findById(airportId);
 
         if(airport == null){
-            throw new RuntimeException("Couldn't find airport with id: " + airportId);
+            throw new AirportNotFoundException("Couldn't find airport with id: " + airportId);
         }
 
         AirportDTO airportDTO = airportService.convertAirportToAirportDTO(airport);
@@ -51,10 +53,12 @@ public class AirportRestController {
     @PostMapping
     public ResponseEntity<AirportDTO> createAirport(@RequestBody AirportDTO airportDTO) {
 
-        if(airportDTO.getId() != null){
-            throw new RuntimeException("Providing id during add airport now allowed.");
-        }
         airportDTO.setId(0);
+
+        if(!airportService.isCityValid(airportDTO.getCity())){
+            throw new InvalidCityNameException("Cannot add airport. City name given is not valid.");
+        }
+
         Airport airport = airportService.convertAirportDTOToAirport(airportDTO);
 
         Airport createdAirport = airportService.save(airport);
@@ -68,7 +72,11 @@ public class AirportRestController {
     public ResponseEntity<AirportDTO> updateAirport(@PathVariable int airportId, @RequestBody AirportDTO airportDTO) {
 
         if(!airportService.airportExists(airportId)){
-            throw new RuntimeException("No airport exists with id: " + airportId);
+            throw new AirportNotFoundException("No airport exists with id: " + airportId);
+        }
+
+        if(!airportService.isCityValid(airportDTO.getCity())){
+            throw new InvalidCityNameException("Cannot update airport. City name given is not valid.");
         }
 
         airportDTO.setId(airportId);
@@ -86,7 +94,7 @@ public class AirportRestController {
     public ResponseEntity<String> deleteAirport(@PathVariable int airportId){
 
         if(!airportService.airportExists(airportId)){
-            throw new RuntimeException("No airport exists with id: " + airportId);
+            throw new AirportNotFoundException("No airport exists with id: " + airportId);
         }
 
         airportService.deleteById(airportId);

@@ -84,6 +84,11 @@ public class AirportServiceImpl implements AirportService{
         return airport;
     }
 
+    @Override
+    public boolean isCityValid(String city) {
+        return city != null && !city.trim().isEmpty();
+    }
+
 
     //other imp emthods will be added
 }

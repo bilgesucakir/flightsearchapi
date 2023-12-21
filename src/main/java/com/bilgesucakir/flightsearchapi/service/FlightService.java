@@ -4,6 +4,7 @@ import com.bilgesucakir.flightsearchapi.dto.FlightRequestDTO;
 import com.bilgesucakir.flightsearchapi.dto.FlightResponseDTO;
 import com.bilgesucakir.flightsearchapi.entity.Flight;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -27,8 +28,9 @@ public interface FlightService {
 
     FlightResponseDTO convertflightToFlightResponseDTO(Flight flight);
 
-    List<FlightResponseDTO> findFlightsWithFilters(String departureCity, String arrivalCity, LocalDate departureDate);
+    boolean isPriceValid(BigDecimal price);
 
+    boolean isDateRangeValid(OffsetDateTime departure, OffsetDateTime arrival);
 
     //flight seach methods will be added
 

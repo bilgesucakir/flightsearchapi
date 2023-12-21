@@ -5,6 +5,7 @@ import com.bilgesucakir.flightsearchapi.dto.FlightRequestDTO;
 import com.bilgesucakir.flightsearchapi.dto.FlightResponseDTO;
 import com.bilgesucakir.flightsearchapi.entity.Airport;
 import com.bilgesucakir.flightsearchapi.entity.Flight;
+import com.bilgesucakir.flightsearchapi.exception.*;
 import com.bilgesucakir.flightsearchapi.service.FlightService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,7 +44,7 @@ public class FlightRestController {
         Flight flight = flightService.findById(flightId);
 
         if(flight == null){
-            throw new RuntimeException("Couldn't find flight with id: " + flightId);
+            throw new FlightNotFoundException("Couldn't find flight with id: " + flightId);
         }
 
         FlightResponseDTO flightResponseDTO = flightService.convertflightToFlightResponseDTO(flight);
@@ -54,17 +55,26 @@ public class FlightRestController {
     @PostMapping
     public ResponseEntity<FlightResponseDTO> createFlight(@RequestBody FlightRequestDTO flightRequestDTO) {
 
-        if(flightRequestDTO.getId() != null) {
-            throw new RuntimeException("Providing id during add flight now allowed.");
-        }
-
         flightRequestDTO.setId(0);
+
         if(flightRequestDTO.getDepartureAirportId() != null && !flightService.givenAirportExists(flightRequestDTO.getDepartureAirportId())){
-            throw new RuntimeException("Departure airport with given id: " + flightRequestDTO.getDepartureAirportId() + " does not exist.");
+            throw new AirportNotFoundException("Departure airport with given id: " + flightRequestDTO.getDepartureAirportId() + " does not exist.");
         }
 
         if(flightRequestDTO.getArrivalAirportId() != null && !flightService.givenAirportExists(flightRequestDTO.getArrivalAirportId())){
-            throw new RuntimeException("Arrival airport with given id: " + flightRequestDTO.getArrivalAirportId() + " does not exist.");
+            throw new AirportNotFoundException("Arrival airport with given id: " + flightRequestDTO.getArrivalAirportId() + " does not exist.");
+        }
+
+        if(!flightService.isPriceValid(flightRequestDTO.getPrice())){
+            throw new InvalidPriceException("Cannot add flight. Price given is not valid.");
+        }
+
+        if(!flightService.isDateRangeValid(flightRequestDTO.getDepartureDateTime(), flightRequestDTO.getArrivalDateTime())){
+            throw new InvalidDateRangeException("Cannot add flight. Departure date time cannot be bigger than or equal to arrival date time.");
+        }
+
+        if(flightRequestDTO.getArrivalAirportId().equals(flightRequestDTO.getDepartureAirportId())){
+            throw new InvalidFlightDestinationException("Cannot add flight. Departure and arrival airports cannot be the same.");
         }
 
         Flight flight = flightService.convertFlightRequestDTOToFlight(flightRequestDTO);
@@ -80,15 +90,27 @@ public class FlightRestController {
     public ResponseEntity<FlightResponseDTO> updateFlight(@PathVariable int flightId, @RequestBody FlightRequestDTO flightRequestDTO) {
 
         if(!flightService.flightExists(flightId)){
-            throw new RuntimeException("No flight exists with id: " + flightId);
+            throw new FlightNotFoundException("No flight exists with id: " + flightId);
         }
 
         if(flightRequestDTO.getDepartureAirportId() != null && !flightService.givenAirportExists(flightRequestDTO.getDepartureAirportId())){
-            throw new RuntimeException("Departure airport with given id: " + flightRequestDTO.getDepartureAirportId() + " does not exist.");
+            throw new AirportNotFoundException("Departure airport with given id: " + flightRequestDTO.getDepartureAirportId() + " does not exist.");
         }
 
         if(flightRequestDTO.getArrivalAirportId() != null && !flightService.givenAirportExists(flightRequestDTO.getArrivalAirportId())){
-            throw new RuntimeException("Arrival airport with given id: " + flightRequestDTO.getArrivalAirportId() + " does not exist.");
+            throw new AirportNotFoundException("Arrival airport with given id: " + flightRequestDTO.getArrivalAirportId() + " does not exist.");
+        }
+
+        if(!flightService.isPriceValid(flightRequestDTO.getPrice())){
+            throw new InvalidPriceException("Cannot update flight. Price given is not valid.");
+        }
+
+        if(!flightService.isDateRangeValid(flightRequestDTO.getDepartureDateTime(), flightRequestDTO.getArrivalDateTime())){
+            throw new InvalidDateRangeException("Cannot update flight. Departure date time cannot be bigger than or equal to arrival date time.");
+        }
+
+        if(flightRequestDTO.getArrivalAirportId().equals(flightRequestDTO.getDepartureAirportId())){
+            throw new InvalidFlightDestinationException("Cannot update flight. Departure and arrival airports cannot be the same.");
         }
 
         flightRequestDTO.setId(flightId);
@@ -106,7 +128,7 @@ public class FlightRestController {
     public ResponseEntity<String> deleteFlight(@PathVariable int flightId){
 
         if(!flightService.flightExists(flightId)){
-            throw new RuntimeException("No flight exists with id: " + flightId);
+            throw new FlightNotFoundException("No flight exists with id: " + flightId);
         }
 
         flightService.deleteById(flightId);

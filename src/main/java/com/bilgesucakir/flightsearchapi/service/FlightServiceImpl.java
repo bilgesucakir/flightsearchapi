@@ -10,6 +10,7 @@ import com.bilgesucakir.flightsearchapi.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
@@ -128,23 +129,14 @@ public class FlightServiceImpl implements FlightService{
     }
 
     @Override
-    public List<FlightResponseDTO> findFlightsWithFilters(String departureCity, String arrivalCity, LocalDate departureDate) {
-
-        OffsetDateTime departureDateTimeBegin = departureDate.atStartOfDay().atOffset(ZoneOffset.UTC);
-        OffsetDateTime departureDateTimeEnd = departureDate.atTime(23, 59, 59, 999999999).atOffset(ZoneOffset.UTC);
-
-        Airport departureAirport = airportRepository.findByCity(departureCity);
-        Airport arrivalAirport = airportRepository.findByCity(arrivalCity);
-
-        List<Flight> filteredFlights = flightRepository.findByDepartureAirportAndArrivalAirportAndDepartureDateTimeBetween(departureAirport, arrivalAirport, departureDateTimeBegin, departureDateTimeEnd);
-
-        List<FlightResponseDTO> flightResponseDTOs = filteredFlights.stream()
-                .map(this::convertflightToFlightResponseDTO)
-                .collect(Collectors.toList());
-
-        return flightResponseDTOs;
+    public boolean isPriceValid(BigDecimal price) {
+        return price.doubleValue() >= 0;
     }
 
+    @Override
+    public boolean isDateRangeValid(OffsetDateTime departure, OffsetDateTime arrival) {
+        return departure.isBefore(arrival);
+    }
 
     //other imp emthods will be added
 }

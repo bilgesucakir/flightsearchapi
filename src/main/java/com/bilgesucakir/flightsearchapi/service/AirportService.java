@@ -22,4 +22,6 @@ public interface AirportService {
 
     Airport convertAirportDTOToAirport(AirportDTO airportDTO);
 
+    boolean isCityValid(String city);
+
 }
