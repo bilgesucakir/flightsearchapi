@@ -8,5 +8,6 @@ import java.time.OffsetDateTime;
 import java.util.List;
 
 public interface FlightRepository extends JpaRepository<Flight, Integer> {
+
     List<Flight> findByDepartureAirportInAndArrivalAirportInAndDepartureDateTimeBetween(List<Airport> departureAirports, List<Airport> arrivalAirports, OffsetDateTime departureDateTimeBegin, OffsetDateTime departureDatetimeEnd);
 }
