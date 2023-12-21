@@ -1,8 +1,9 @@
-package com.example.flightsearchapi.service;
+package com.bilgesucakir.flightsearchapi.service;
 
-import com.example.flightsearchapi.entity.Airport;
-import com.example.flightsearchapi.entity.Flight;
-import com.example.flightsearchapi.repository.AirportRepository;
+import com.bilgesucakir.flightsearchapi.dto.AirportDTO;
+import com.bilgesucakir.flightsearchapi.entity.Airport;
+import com.bilgesucakir.flightsearchapi.entity.Flight;
+import com.bilgesucakir.flightsearchapi.repository.AirportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,17 +48,41 @@ public class AirportServiceImpl implements AirportService{
     }
 
 
+
+
     @Override
-    public List<Airport> findByDepartureFlight(Flight flight) {
-        return airportRepository.findByDepartingFlightsContaining(flight);
+    public boolean airportExists(int id) {
+        return airportRepository.existsById(id);
     }
 
     @Override
-    public List<Airport> findByArrivalFlight(Flight flight) {
-        return airportRepository.findByArrivingFlightsContaining(flight);
+    public AirportDTO convertAirportToAirportDTO(Airport airport) {
+        AirportDTO airportDTO = new AirportDTO();
+
+        if(airport.getCity() != null){
+            airportDTO.setCity(airport.getCity());
+        }
+
+        airportDTO.setId(airport.getId());
+
+        return airportDTO;
     }
 
+    @Override
+    public Airport convertAirportDTOToAirport(AirportDTO airportDTO) {
 
+        Airport airport = new Airport();
+
+        if(airportDTO.getId() != null && airportDTO.getId() != 0){
+            airport = findById(airportDTO.getId());
+        }
+
+        if(airportDTO.getCity() != null){
+            airport.setCity(airportDTO.getCity());
+        }
+
+        return airport;
+    }
 
 
     //other imp emthods will be added

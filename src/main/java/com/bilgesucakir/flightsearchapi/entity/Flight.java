@@ -1,13 +1,13 @@
-package com.example.flightsearchapi.entity;
+package com.bilgesucakir.flightsearchapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.OffsetDateTime;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "flight")
@@ -17,31 +17,29 @@ public class Flight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "departure_airport_id")
     @JsonBackReference
     private Airport departureAirport;
 
-    @ManyToOne(cascade = {
-            CascadeType.PERSIST, CascadeType.MERGE,
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "arrival_airport_id")
     @JsonBackReference
     private Airport arrivalAirport;
 
     @Column(name = "departure_datetime")
-    private LocalDateTime departureDateTime;
+    private OffsetDateTime departureDateTime;
 
     @Column(name = "arrival_datetime")
-    private LocalDateTime arrivalDateTime;
+    private OffsetDateTime arrivalDateTime;
 
-    @Column(name = "price")
+    @Column(name = "price", precision = 10, scale=2)
     private BigDecimal price;
 
     public Flight(){}
-    public Flight(int id, Airport departureAirport, Airport arrivalAirport, LocalDateTime departureDateTime, LocalDateTime arrivalDateTime, BigDecimal price) {
+    public Flight(int id, Airport departureAirport, Airport arrivalAirport, OffsetDateTime departureDateTime, OffsetDateTime arrivalDateTime, BigDecimal price) {
         this.id = id;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
@@ -74,19 +72,19 @@ public class Flight {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public LocalDateTime getDepartureDateTime() {
+    public OffsetDateTime getDepartureDateTime() {
         return departureDateTime;
     }
 
-    public void setDepartureDateTime(LocalDateTime departureDateTime) {
+    public void setDepartureDateTime(OffsetDateTime departureDateTime) {
         this.departureDateTime = departureDateTime;
     }
 
-    public LocalDateTime getArrivalDateTime() {
+    public OffsetDateTime getArrivalDateTime() {
         return arrivalDateTime;
     }
 
-    public void setArrivalDateTime(LocalDateTime arrivalDateTime) {
+    public void setArrivalDateTime(OffsetDateTime arrivalDateTime) {
         this.arrivalDateTime = arrivalDateTime;
     }
 
@@ -96,5 +94,17 @@ public class Flight {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Flight{" +
+                "id=" + id +
+                ", departureAirport='" + departureAirport + '\'' +
+                ", arrivalAirport='" + arrivalAirport + '\'' +
+                ", departureDateTime=" + departureDateTime +
+                ", returnDateTime=" + arrivalDateTime +
+                ", price=" + price +
+                '}';
     }
 }
