@@ -7,9 +7,10 @@ import com.bilgesucakir.flightsearchapi.repository.FlightRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -28,10 +29,16 @@ public class ScheduledJobServiceImpl implements ScheduledJobService {
 
     @Override
     @Scheduled(cron = "0 0 0 * * *")
+    @Transactional
     public void importFlightsDaily() {
+
+        System.out.println("Scheduled job begins.");
+
         List<Flight> receivedFlightsFromExternalAPI = mockAPICall();
 
-        flightRepository.saveAll(receivedFlightsFromExternalAPI);
+        flightRepository.saveAllAndFlush(receivedFlightsFromExternalAPI);
+
+        System.out.println("Scheduled job ends.");
     }
 
     @Override
@@ -44,18 +51,18 @@ public class ScheduledJobServiceImpl implements ScheduledJobService {
         List<Airport> airports = airportRepository.findAll();
         int len = airports.size();
 
-        OffsetDateTime dateTime1 = OffsetDateTime.now().plusDays(7).withHour(0).withMinute(0);
-        OffsetDateTime dateTime2 = dateTime1.plusHours(1).plusMinutes(20);
+        LocalDateTime dateTime1 = LocalDateTime.now().plusDays(7).withHour(0).withMinute(0).withSecond(0).withNano(0);
+        LocalDateTime dateTime2 = dateTime1.plusHours(1).plusMinutes(20);
 
         for(int i=0; i<5; i++){
 
-            BigDecimal price = new BigDecimal(random.nextInt(500,5000));
-            BigDecimal price2 = new BigDecimal(random.nextInt(500,5000));
-            BigDecimal price3 = new BigDecimal(random.nextInt(500,5000));
-            BigDecimal price4 = new BigDecimal(random.nextInt(500,5000));
+            BigDecimal price = new BigDecimal(random.nextInt(50,500)*10);
+            BigDecimal price2 = new BigDecimal(random.nextInt(50,500)*10);
+            BigDecimal price3 = new BigDecimal(random.nextInt(50,500)*10);
+            BigDecimal price4 = new BigDecimal(random.nextInt(50,500)*10);
 
             Flight flight1 = new Flight(0, airports.get(0), airports.get(1), dateTime1, dateTime2, price);
-            Flight flight2 = new Flight(0, airports.get(1), airports.get(0), dateTime1.minusMinutes(30), dateTime2.plusMinutes(30), price2);
+            Flight flight2 = new Flight(0, airports.get(1), airports.get(0), dateTime1.plusMinutes(30), dateTime2.plusMinutes(30), price2);
 
             Flight flight3 = new Flight(0, airports.get(len-2), airports.get(len-1), dateTime1, dateTime2, price3);
             Flight flight4 = new Flight(0, airports.get(len-1), airports.get(len-2), dateTime1.plusMinutes(30), dateTime2.plusMinutes(30), price4);

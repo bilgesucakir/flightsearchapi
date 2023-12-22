@@ -1,12 +1,9 @@
 package com.bilgesucakir.flightsearchapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.math.BigDecimal;
 
 @Entity
@@ -30,16 +27,16 @@ public class Flight {
     private Airport arrivalAirport;
 
     @Column(name = "departure_datetime")
-    private OffsetDateTime departureDateTime;
+    private LocalDateTime departureDateTime;
 
     @Column(name = "arrival_datetime")
-    private OffsetDateTime arrivalDateTime;
+    private LocalDateTime arrivalDateTime;
 
     @Column(name = "price", precision = 10, scale=2)
     private BigDecimal price;
 
     public Flight(){}
-    public Flight(int id, Airport departureAirport, Airport arrivalAirport, OffsetDateTime departureDateTime, OffsetDateTime arrivalDateTime, BigDecimal price) {
+    public Flight(int id, Airport departureAirport, Airport arrivalAirport, LocalDateTime departureDateTime, LocalDateTime arrivalDateTime, BigDecimal price) {
         this.id = id;
         this.departureAirport = departureAirport;
         this.arrivalAirport = arrivalAirport;
@@ -72,19 +69,19 @@ public class Flight {
         this.arrivalAirport = arrivalAirport;
     }
 
-    public OffsetDateTime getDepartureDateTime() {
+    public LocalDateTime getDepartureDateTime() {
         return departureDateTime;
     }
 
-    public void setDepartureDateTime(OffsetDateTime departureDateTime) {
+    public void setDepartureDateTime(LocalDateTime departureDateTime) {
         this.departureDateTime = departureDateTime;
     }
 
-    public OffsetDateTime getArrivalDateTime() {
+    public LocalDateTime getArrivalDateTime() {
         return arrivalDateTime;
     }
 
-    public void setArrivalDateTime(OffsetDateTime arrivalDateTime) {
+    public void setArrivalDateTime(LocalDateTime arrivalDateTime) {
         this.arrivalDateTime = arrivalDateTime;
     }
 

@@ -1,9 +1,7 @@
 package com.bilgesucakir.flightsearchapi.service;
 
-
 import com.bilgesucakir.flightsearchapi.dto.FlightRequestDTO;
 import com.bilgesucakir.flightsearchapi.dto.FlightResponseDTO;
-import com.bilgesucakir.flightsearchapi.entity.Airport;
 import com.bilgesucakir.flightsearchapi.entity.Flight;
 import com.bilgesucakir.flightsearchapi.repository.AirportRepository;
 import com.bilgesucakir.flightsearchapi.repository.FlightRepository;
@@ -11,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class FlightServiceImpl implements FlightService{
@@ -134,7 +130,7 @@ public class FlightServiceImpl implements FlightService{
     }
 
     @Override
-    public boolean isDateRangeValid(OffsetDateTime departure, OffsetDateTime arrival) {
+    public boolean isDateRangeValid(LocalDateTime departure, LocalDateTime arrival) {
         return departure.isBefore(arrival);
     }
 

@@ -9,10 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class FlightSearchServiceImpl implements FlightSearchService{
@@ -31,8 +29,8 @@ public class FlightSearchServiceImpl implements FlightSearchService{
     @Override
     public List<Flight> findFlightsWithFilters(String departureCity, String arrivalCity, LocalDate departureDate) {
 
-        OffsetDateTime departureDateTimeBegin = departureDate.atStartOfDay().atOffset(ZoneOffset.UTC);
-        OffsetDateTime departureDateTimeEnd = departureDate.atTime(23, 59, 59, 999999999).atOffset(ZoneOffset.UTC);
+        LocalDateTime departureDateTimeBegin = departureDate.atStartOfDay();
+        LocalDateTime departureDateTimeEnd = departureDate.atTime(23, 59, 59, 999999999);
 
         List<Airport> departureAirports = airportRepository.findByCity(departureCity);
         List<Airport> arrivalAirports = airportRepository.findByCity(arrivalCity);

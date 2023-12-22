@@ -1,7 +1,8 @@
 package com.bilgesucakir.flightsearchapi.dto;
 
 import java.math.BigDecimal;
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
+
 
 public class FlightRequestDTO {
     private Integer id;
@@ -9,15 +10,15 @@ public class FlightRequestDTO {
 
     private Integer arrivalAirportId;
 
-    private OffsetDateTime departureDateTime;
+    private LocalDateTime departureDateTime;
 
-    private OffsetDateTime arrivalDateTime;
+    private LocalDateTime arrivalDateTime;
 
     private BigDecimal price;
 
     public FlightRequestDTO(){}
 
-    public FlightRequestDTO(Integer id, Integer departureAirportId, Integer arrivalAirportId, OffsetDateTime departureDateTime, OffsetDateTime arrivalDateTime, BigDecimal price) {
+    public FlightRequestDTO(Integer id, Integer departureAirportId, Integer arrivalAirportId, LocalDateTime departureDateTime, LocalDateTime arrivalDateTime, BigDecimal price) {
         this.id = id;
         this.departureAirportId = departureAirportId;
         this.arrivalAirportId = arrivalAirportId;
@@ -50,19 +51,19 @@ public class FlightRequestDTO {
         this.arrivalAirportId = arrivalAirportId;
     }
 
-    public OffsetDateTime getDepartureDateTime() {
+    public LocalDateTime getDepartureDateTime() {
         return departureDateTime;
     }
 
-    public void setDepartureDateTime(OffsetDateTime departureDateTime) {
+    public void setDepartureDateTime(LocalDateTime departureDateTime) {
         this.departureDateTime = departureDateTime;
     }
 
-    public OffsetDateTime getArrivalDateTime() {
+    public LocalDateTime getArrivalDateTime() {
         return arrivalDateTime;
     }
 
-    public void setArrivalDateTime(OffsetDateTime arrivalDateTime) {
+    public void setArrivalDateTime(LocalDateTime arrivalDateTime) {
         this.arrivalDateTime = arrivalDateTime;
     }
 
