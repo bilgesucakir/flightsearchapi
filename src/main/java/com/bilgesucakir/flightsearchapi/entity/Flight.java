@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "flight")
+@Table(name = "flights")
 public class Flight {
 
     @Id

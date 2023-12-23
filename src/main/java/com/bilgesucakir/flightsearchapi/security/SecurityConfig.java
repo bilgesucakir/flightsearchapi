@@ -1,54 +1,87 @@
 package com.bilgesucakir.flightsearchapi.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private JWTAuthEntryPoint jwtAuthEntryPoint;
+    private CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
+    public SecurityConfig(CustomUserDetailsService customUserDetailsService, JWTAuthEntryPoint jwtAuthEntryPoint) {
+        this.customUserDetailsService = customUserDetailsService;
+        this.jwtAuthEntryPoint = jwtAuthEntryPoint;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
+
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+
         http
-                .csrf(csrf -> csrf.disable())
-                .authorizeRequests()
+                .csrf(AbstractHttpConfigurer::disable)
 
-                .requestMatchers(HttpMethod.GET, "/api/search/flights").hasAnyRole("USER", "ADMIN")
+                .exceptionHandling(exceptionHandling -> exceptionHandling.authenticationEntryPoint(jwtAuthEntryPoint))
 
-                .requestMatchers(HttpMethod.GET, "api/airports").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "api/airports/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.POST, "api/airports").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "api/airports/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "api/airports/**").hasRole("ADMIN")
+                .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-                .requestMatchers(HttpMethod.GET, "api/flights").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "api/flights/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.POST, "api/flights").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "api/flights/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "api/flights/**").hasRole("ADMIN")
+                .authorizeHttpRequests(authorize -> authorize
 
-                .anyRequest().authenticated()
-                .and()
+                        .requestMatchers(HttpMethod.GET, "/api/search/flights").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "api/auth/**").permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "api/airports").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "api/airports/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "api/airports").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "api/airports/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "api/airports/**").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.GET, "api/flights").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "api/flights/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "api/flights").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "api/flights/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "api/flights/**").hasRole("ADMIN")
+
+                        .anyRequest().authenticated()
+
+                )
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }
 
     @Bean
-    public UserDetailsService inMemoryUsers(){
-        UserDetails admin = User.builder().username("admin").password("{noop}admin12345").roles("ADMIN").build();
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+        return authenticationConfiguration.getAuthenticationManager();
+    }
 
-        UserDetails user1 = User.builder().username("user1").password("{noop}user1abc").roles("USER").build();
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
 
-        return new InMemoryUserDetailsManager(admin, user1);
+    @Bean
+    public JWTAuthenticationFilter jwtAuthenticationFilter(){
+        return new JWTAuthenticationFilter();
     }
 }
