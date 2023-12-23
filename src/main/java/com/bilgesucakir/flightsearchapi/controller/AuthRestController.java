@@ -16,10 +16,7 @@
     import org.springframework.security.core.Authentication;
     import org.springframework.security.core.context.SecurityContextHolder;
     import org.springframework.security.crypto.password.PasswordEncoder;
-    import org.springframework.web.bind.annotation.PostMapping;
-    import org.springframework.web.bind.annotation.RequestBody;
-    import org.springframework.web.bind.annotation.RequestMapping;
-    import org.springframework.web.bind.annotation.RestController;
+    import org.springframework.web.bind.annotation.*;
 
     import java.util.Collections;
 
@@ -73,7 +70,7 @@
             user.setUsername(userRequestDTO.getUsername());
             user.setPassword(passwordEncoder.encode(userRequestDTO.getPassword()));
 
-            RoleEntity role = roleEntityService.findByName("USER");
+            RoleEntity role = roleEntityService.findByName("ROLE_USER");
             user.setRoles(Collections.singletonList(role));
 
             userEntityService.save(user);

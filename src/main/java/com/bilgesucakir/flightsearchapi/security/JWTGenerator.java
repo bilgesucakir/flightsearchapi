@@ -1,21 +1,12 @@
 package com.bilgesucakir.flightsearchapi.security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 
-import io.jsonwebtoken.Jwts;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-import java.security.Key;
 import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
@@ -39,7 +30,7 @@ public class JWTGenerator {
                 .compact();
 
         System.out.println("New token: " + token);
-        System.out.print("Issue date: " + issueDate);
+        System.out.println("Issue date: " + issueDate);
         System.out.println("Expiration date: " + expirationDate);
 
         return token;
