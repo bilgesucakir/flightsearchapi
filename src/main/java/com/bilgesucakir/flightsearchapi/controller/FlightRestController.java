@@ -58,7 +58,7 @@ public class FlightRestController {
     }
 
 
-    @Operation(summary = "GET request for flights (with id given)", description = "Returns a flight with given id<br>Only accessible to admins",
+    @Operation(summary = "GET request for flights (with id)", description = "Returns a flight with given id<br>Only accessible to admins",
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200"),
                     @ApiResponse(description = "Unauthorized<br>-Token invalid (wrong or expired token)",

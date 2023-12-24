@@ -56,7 +56,7 @@ public class AirportRestController {
         return new ResponseEntity<>(airportDTOs, HttpStatus.OK);
     }
 
-    @Operation(summary = "GET request for airports", description = "Returns an airport with given id<br>Only accessible to admins",
+    @Operation(summary = "GET request for airports (with id)", description = "Returns an airport with given id<br>Only accessible to admins",
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200"),
                     @ApiResponse(description = "Unauthorized<br>-Token invalid (wrong or expired token)",
