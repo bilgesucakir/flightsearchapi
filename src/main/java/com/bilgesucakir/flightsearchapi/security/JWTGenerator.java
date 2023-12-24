@@ -10,6 +10,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
+/**
+ * JWT generator and validator using HMAC SHA-512 signature and constant secret of the API
+ */
 @Component
 public class JWTGenerator {
 

@@ -3,12 +3,19 @@ package com.bilgesucakir.flightsearchapi.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+/***
+ * Data transfer object for Flight entity, returned in responses
+ */
 public class FlightResponseDTO {
 
     private Integer id;
-    private String departureAirport;
 
-    private String arrivalAirport;
+    private Integer departureAirportId;
+    private String departureAirportCity;
+
+    private Integer arrivalAirportId;
+
+    private String arrivalAirportCity;
 
     private LocalDateTime departureDateTime;
 
@@ -18,10 +25,12 @@ public class FlightResponseDTO {
 
     public FlightResponseDTO(){}
 
-    public FlightResponseDTO(Integer id, String departureAirport, String arrivalAirport, LocalDateTime departureDateTime, LocalDateTime arrivalDateTime, BigDecimal price) {
+    public FlightResponseDTO(Integer id, String departureAirportCity, String arrivalAirportCity, Integer departureAirportId, Integer arrivalAirportId, LocalDateTime departureDateTime, LocalDateTime arrivalDateTime, BigDecimal price) {
         this.id = id;
-        this.departureAirport = departureAirport;
-        this.arrivalAirport = arrivalAirport;
+        this.departureAirportCity = departureAirportCity;
+        this.arrivalAirportCity = arrivalAirportCity;
+        this.departureAirportId = departureAirportId;
+        this.arrivalAirportId = arrivalAirportId;
         this.departureDateTime = departureDateTime;
         this.arrivalDateTime = arrivalDateTime;
         this.price = price;
@@ -35,24 +44,40 @@ public class FlightResponseDTO {
         this.id = id;
     }
 
-    public String getDepartureAirport() {
-        return departureAirport;
+    public String getDepartureAirportCity() {
+        return departureAirportCity;
     }
 
-    public void setDepartureAirport(String departureAirport) {
-        this.departureAirport = departureAirport;
+    public void setDepartureAirportCity(String departureAirportCity) {
+        this.departureAirportCity = departureAirportCity;
     }
 
-    public String getArrivalAirport() {
-        return arrivalAirport;
+    public String getArrivalAirportCity() {
+        return arrivalAirportCity;
     }
 
-    public void setArrivalAirport(String arrivalAirport) {
-        this.arrivalAirport = arrivalAirport;
+    public void setArrivalAirportCity(String arrivalAirportCity) {
+        this.arrivalAirportCity = arrivalAirportCity;
     }
 
     public LocalDateTime getDepartureDateTime() {
         return departureDateTime;
+    }
+
+    public Integer getDepartureAirportId() {
+        return departureAirportId;
+    }
+
+    public void setDepartureAirportId(Integer departureAirportId) {
+        this.departureAirportId = departureAirportId;
+    }
+
+    public Integer getArrivalAirportId() {
+        return arrivalAirportId;
+    }
+
+    public void setArrivalAirportId(Integer arrivalAirportId) {
+        this.arrivalAirportId = arrivalAirportId;
     }
 
     public void setDepartureDateTime(LocalDateTime departureDateTime) {

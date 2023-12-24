@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.math.BigDecimal;
 
+/**
+ * Flight entity
+ */
 @Entity
 @Table(name = "flights")
 public class Flight {

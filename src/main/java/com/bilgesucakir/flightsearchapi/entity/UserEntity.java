@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * User entity for auth operations
+ */
 @Entity
 @Table(name="users")
 public class UserEntity {

@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Scheduled job service for mocking a daily API call to some external API to get flights data
+ * Flight data is generated to simulate the API call and then saved to database
+ * Set to 00:00 for every day to be run
+ */
 @Service
 public class ScheduledJobServiceImpl implements ScheduledJobService {
     private FlightRepository flightRepository;
@@ -25,7 +30,6 @@ public class ScheduledJobServiceImpl implements ScheduledJobService {
         this.flightRepository = flightRepository;
         this.airportRepository = airportRepository;
     }
-
 
     @Override
     @Scheduled(cron = "0 0 0 * * *")
@@ -75,7 +79,6 @@ public class ScheduledJobServiceImpl implements ScheduledJobService {
             dateTime1 = dateTime1.plusHours(4);
             dateTime2 = dateTime1.plusHours(1).plusMinutes(20);
         }
-
 
         return generatedFlightData;
     }

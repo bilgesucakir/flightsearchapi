@@ -1,5 +1,8 @@
 package com.bilgesucakir.flightsearchapi.exception;
 
+/**
+ * Custom exception
+ */
 public class InvalidDateRangeException extends RuntimeException {
 
     public InvalidDateRangeException(String message) {

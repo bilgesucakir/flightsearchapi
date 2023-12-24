@@ -3,13 +3,15 @@ package com.bilgesucakir.flightsearchapi.dto;
 import com.bilgesucakir.flightsearchapi.entity.Flight;
 import java.util.List;
 
+/***
+ * Data transfer object for Airport entity both used in requests and responses
+ */
 public class AirportDTO {
 
     private Integer id;
 
     private String city;
     public AirportDTO(){}
-
 
     public AirportDTO(Integer id, String city, List<Flight> departingFlights, List<Flight> arrivingFlights) {
         this.id = id;

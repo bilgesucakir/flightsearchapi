@@ -5,6 +5,9 @@ import com.bilgesucakir.flightsearchapi.repository.UserEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * User service implementation handling some querying of user entity
+ */
 @Service
 public class UserEntityServiceImpl implements UserEntityService{
 
@@ -14,7 +17,6 @@ public class UserEntityServiceImpl implements UserEntityService{
     public UserEntityServiceImpl(UserEntityRepository userEntityRepository) {
         this.userEntityRepository = userEntityRepository;
     }
-
 
     @Override
     public boolean isUserEntityExists(String username) {

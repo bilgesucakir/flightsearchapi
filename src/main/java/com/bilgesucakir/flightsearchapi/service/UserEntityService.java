@@ -1,10 +1,11 @@
 package com.bilgesucakir.flightsearchapi.service;
 
-import com.bilgesucakir.flightsearchapi.entity.Airport;
-import com.bilgesucakir.flightsearchapi.entity.Flight;
-import com.bilgesucakir.flightsearchapi.entity.UserEntity;
-import com.bilgesucakir.flightsearchapi.repository.UserEntityRepository;
 
+import com.bilgesucakir.flightsearchapi.entity.UserEntity;
+
+/**
+ * User service
+ */
 public interface UserEntityService {
 
     boolean isUserEntityExists(String username);

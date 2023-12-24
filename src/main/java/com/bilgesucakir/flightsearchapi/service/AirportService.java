@@ -2,10 +2,12 @@ package com.bilgesucakir.flightsearchapi.service;
 
 import com.bilgesucakir.flightsearchapi.dto.AirportDTO;
 import com.bilgesucakir.flightsearchapi.entity.Airport;
-import com.bilgesucakir.flightsearchapi.entity.Flight;
 
 import java.util.List;
 
+/**
+ * Airport service
+ */
 public interface AirportService {
 
     List<Airport> findAll();

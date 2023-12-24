@@ -1,14 +1,15 @@
 package com.bilgesucakir.flightsearchapi.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Airport entity
+ */
 @Entity
 @Table(name = "airports")
 public class Airport {

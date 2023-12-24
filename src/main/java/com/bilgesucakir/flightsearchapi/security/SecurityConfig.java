@@ -16,6 +16,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+/**
+ * Security configuration of the API handling authoriaztion for endpoint access according to roles, authentication status
+ * by using a filter chain, enabling exception handling (auth related)
+ * BCrypt is used to encrypt passwords
+ * Airport and Flight rest controllers are set here for admin access only
+ * Flight search with filter is allowed for users and admins
+ * Register, login and Swagger OpenAPI endpoints are accessible to all
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -57,6 +65,18 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "api/flights").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "api/flights/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "api/flights/**").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.GET,
+                                "/v3/api-docs",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/swagger-ui",
+                                "/swagger-resources",
+                                "/swagger-resources/**",
+                                "/configuration/ui",
+                                "/configuration/security",
+                                "/webjars/**"
+                        ).permitAll()
 
                         .anyRequest().authenticated()
 

@@ -2,14 +2,18 @@ package com.bilgesucakir.flightsearchapi.dto;
 
 import java.util.List;
 
-public class RoundTripFlightResponseDTO {
+/***
+ * Data transfer object for Flight search results
+ * returnFlights = null or not differs the search type as one-way or two-way flights search
+ */
+public class FlightSearchResponseDTO {
     private List<FlightResponseDTO> departureFlights;
 
     private List<FlightResponseDTO> returnFlights;
 
-    public RoundTripFlightResponseDTO(){}
+    public FlightSearchResponseDTO(){}
 
-    public RoundTripFlightResponseDTO(List<FlightResponseDTO> departureFlights, List<FlightResponseDTO> returnFlights) {
+    public FlightSearchResponseDTO(List<FlightResponseDTO> departureFlights, List<FlightResponseDTO> returnFlights) {
         this.departureFlights = departureFlights;
         this.returnFlights = returnFlights;
     }

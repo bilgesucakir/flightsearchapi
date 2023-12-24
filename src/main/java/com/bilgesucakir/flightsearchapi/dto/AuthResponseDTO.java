@@ -1,5 +1,8 @@
 package com.bilgesucakir.flightsearchapi.dto;
 
+/***
+ * Data transfer object for returning a JWT and its type during registration of the user
+ */
 public class AuthResponseDTO {
 
     private String accessToken;

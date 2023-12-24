@@ -2,7 +2,6 @@ package com.bilgesucakir.flightsearchapi.service;
 
 import com.bilgesucakir.flightsearchapi.dto.AirportDTO;
 import com.bilgesucakir.flightsearchapi.entity.Airport;
-import com.bilgesucakir.flightsearchapi.entity.Flight;
 import com.bilgesucakir.flightsearchapi.repository.AirportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +9,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Airport service implementation handling dto-entity conversions and any db querying methods related with airport CRUD operations
+ */
 @Service
 public class AirportServiceImpl implements AirportService{
     private AirportRepository airportRepository;
@@ -46,9 +48,6 @@ public class AirportServiceImpl implements AirportService{
     public void deleteById(int id) {
         airportRepository.deleteById(id);
     }
-
-
-
 
     @Override
     public boolean airportExists(int id) {
@@ -89,7 +88,5 @@ public class AirportServiceImpl implements AirportService{
         return city != null && !city.trim().isEmpty();
     }
 
-
-    //other imp emthods will be added
 }
 

@@ -9,7 +9,10 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-
+/**
+ * JWT authentication entry point to set http response type and error message of the response
+ * will be returned of raised authentication related exceptions
+ */
 @Component
 public class JWTAuthEntryPoint implements AuthenticationEntryPoint {
     @Override

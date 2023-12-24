@@ -8,6 +8,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Flight service
+ */
 public interface FlightService {
 
     List<Flight> findAll();
@@ -22,7 +25,6 @@ public interface FlightService {
 
     boolean flightExists(int id);
 
-
     Flight convertFlightRequestDTOToFlight(FlightRequestDTO flightRequestDTO);
 
     FlightResponseDTO convertflightToFlightResponseDTO(Flight flight);
@@ -30,7 +32,5 @@ public interface FlightService {
     boolean isPriceValid(BigDecimal price);
 
     boolean isDateRangeValid(LocalDateTime departure, LocalDateTime arrival);
-
-    //flight seach methods will be added
 
 }

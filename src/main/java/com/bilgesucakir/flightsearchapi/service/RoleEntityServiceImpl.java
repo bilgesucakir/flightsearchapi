@@ -1,6 +1,5 @@
 package com.bilgesucakir.flightsearchapi.service;
 
-import com.bilgesucakir.flightsearchapi.entity.Airport;
 import com.bilgesucakir.flightsearchapi.entity.RoleEntity;
 import com.bilgesucakir.flightsearchapi.repository.RoleEntityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Role service implementation handling some querying of role entity
+ */
 @Service
 public class RoleEntityServiceImpl implements  RoleEntityService{
 
@@ -17,7 +19,6 @@ public class RoleEntityServiceImpl implements  RoleEntityService{
     public RoleEntityServiceImpl(RoleEntityRepository roleEntityRepository) {
         this.roleEntityRepository = roleEntityRepository;
     }
-
 
     @Override
     public RoleEntity findByName(String name) {
@@ -30,6 +31,5 @@ public class RoleEntityServiceImpl implements  RoleEntityService{
                 roleEntity = result.get();
             }
             return roleEntity;
-
     }
 }

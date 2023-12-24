@@ -1,6 +1,5 @@
 package com.bilgesucakir.flightsearchapi.service;
 
-import com.bilgesucakir.flightsearchapi.dto.FlightResponseDTO;
 import com.bilgesucakir.flightsearchapi.entity.Airport;
 import com.bilgesucakir.flightsearchapi.entity.Flight;
 import com.bilgesucakir.flightsearchapi.repository.AirportRepository;
@@ -12,9 +11,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
+/**
+ * Flight search service implementation handling querying of flights with filters for search endpoint
+ */
 @Service
 public class FlightSearchServiceImpl implements FlightSearchService{
-
 
     private FlightRepository flightRepository;
     private AirportRepository airportRepository;
@@ -24,7 +26,6 @@ public class FlightSearchServiceImpl implements FlightSearchService{
         this.flightRepository = flightRepository;
         this.airportRepository = airportRepository;
     }
-
 
     @Override
     public List<Flight> findFlightsWithFilters(String departureCity, String arrivalCity, LocalDate departureDate) {
@@ -49,6 +50,5 @@ public class FlightSearchServiceImpl implements FlightSearchService{
     public boolean isCityValid(String city) {
         return !airportRepository.findByCity(city).isEmpty();
     }
-
 
 }

@@ -1,15 +1,18 @@
 package com.bilgesucakir.flightsearchapi.exception.handling;
 
-public class ErrorResponse {
+/**
+ * Custom error response for exception handling
+ */
+public class CustomErrorResponse {
 
     private int status;
     private String message;
     private long timeStamp;
 
-    public ErrorResponse() {
+    public CustomErrorResponse() {
     }
 
-    public ErrorResponse(int status, String message, long timeStamp) {
+    public CustomErrorResponse(int status, String message, long timeStamp) {
         this.status = status;
         this.message = message;
         this.timeStamp = timeStamp;

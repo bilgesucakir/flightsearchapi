@@ -1,5 +1,8 @@
 package com.bilgesucakir.flightsearchapi.dto;
 
+/***
+ * Data transfer object for user credentials, received from login request
+ */
 public class UserRequestDTO {
 
     private String username;

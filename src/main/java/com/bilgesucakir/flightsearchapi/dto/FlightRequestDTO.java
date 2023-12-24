@@ -3,7 +3,9 @@ package com.bilgesucakir.flightsearchapi.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-
+/***
+ * Data transfer object for Flight entity, received from requests
+ */
 public class FlightRequestDTO {
     private Integer id;
     private Integer departureAirportId;

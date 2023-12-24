@@ -5,6 +5,9 @@ import org.springframework.security.core.userdetails.User;
 
 import java.util.ArrayList;
 
+/**
+ * Role entity for endpoint access
+ */
 @Entity
 @Table(name="roles")
 public class RoleEntity {

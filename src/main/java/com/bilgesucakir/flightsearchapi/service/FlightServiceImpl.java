@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 
+/**
+ * Flight service implementation handling dto-entity conversions and any db querying methods related with flight CRUD operations
+ */
 @Service
 public class FlightServiceImpl implements FlightService{
     private FlightRepository flightRepository;
@@ -24,7 +27,6 @@ public class FlightServiceImpl implements FlightService{
         this.flightRepository = flightRepository;
         this.airportRepository = airportRepository;
     }
-
 
     @Override
     public List<Flight> findAll() {
@@ -102,11 +104,13 @@ public class FlightServiceImpl implements FlightService{
         flightResponseDTO.setId(flight.getId());
 
         if(flight.getArrivalAirport() != null){
-            flightResponseDTO.setArrivalAirport(flight.getArrivalAirport().getCity());
+            flightResponseDTO.setArrivalAirportCity(flight.getArrivalAirport().getCity());
+            flightResponseDTO.setArrivalAirportId(flight.getArrivalAirport().getId());
         }
 
         if(flight.getDepartureAirport() != null){
-            flightResponseDTO.setDepartureAirport(flight.getDepartureAirport().getCity());
+            flightResponseDTO.setDepartureAirportCity(flight.getDepartureAirport().getCity());
+            flightResponseDTO.setDepartureAirportId(flight.getDepartureAirport().getId());
         }
 
         if(flight.getArrivalDateTime() != null) {
@@ -134,5 +138,4 @@ public class FlightServiceImpl implements FlightService{
         return departure.isBefore(arrival);
     }
 
-    //other imp emthods will be added
 }

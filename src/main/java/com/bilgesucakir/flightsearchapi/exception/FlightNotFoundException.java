@@ -1,7 +1,8 @@
 package com.bilgesucakir.flightsearchapi.exception;
 
-
-
+/**
+ * Custom exception
+ */
 public class FlightNotFoundException extends RuntimeException {
 
     public FlightNotFoundException(String message) {

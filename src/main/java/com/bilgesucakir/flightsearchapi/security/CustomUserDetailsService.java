@@ -16,6 +16,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * A custom user details service implementing UserDetailsService to get user credentials from request and
+ * assign them to a User object and map them to their roles for later use
+ */
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
