@@ -138,7 +138,7 @@ The API uses JWT for authentication. JWT tokens are provided in the response bod
 
 Passwords are stored in the database table named *roles* with BCrypt encoding
 
-##Running the Project
+## Running the Project
 - Use an IDE to run the project
   - IntelliJ IDEA
   - etc.
