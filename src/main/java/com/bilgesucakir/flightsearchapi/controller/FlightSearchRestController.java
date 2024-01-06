@@ -99,7 +99,7 @@ public class FlightSearchRestController {
         if(returnDate != null){
 
             if(!flightSearchService.isDateRangeValid(departureDate, returnDate)){
-                throw new InvalidDateRangeException("Cannot get flights. .");
+                throw new InvalidDateRangeException("Cannot get flights. Departure date cannot be bigger than return date.");
             }
 
             //for return flights, departure and arrival city information will be swapped between each other
