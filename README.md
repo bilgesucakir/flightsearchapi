@@ -153,7 +153,7 @@ Passwords are stored in the database table named *roles* with BCrypt encoding
   ```
 
 ## Documentation
-After running, the Swagger OpenAPI UI is available [here](http://localhost:8080/swagger-ui/index.html) or you can get the JSON version from [here](http://localhost:8080/api-docs)
+After running, the Swagger OpenAPI UI is available [here](http://localhost:8080/swagger-ui/index.html) or you can get the JSON version from [here](http://localhost:8080/v3/api-docs)
 
 ## Additional Notes
 To try out the endpoints, you can use already registered users (3 admin, 1 user).
